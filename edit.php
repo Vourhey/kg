@@ -28,7 +28,7 @@ if($result->num_rows > 0) {
       </tr>";
   }
 } else {
-  echo "You don't have films!";
+  echo "<tr><td>You don't have films!</td></tr>";
 }
 
 
