@@ -49,7 +49,7 @@ class Film {
   private function queryImage() {
     $nodelist = $this->xpath->query('//*[@id="photoBlock"]/div[1]/a/img');
     if($nodelist->length == 0) {
-      $nodelist = $this->xpath->query('//*[@id="wrap"]/a/img');
+      $nodelist = $this->xpath->query('//*[@id="photoBlock"]/div[1]/img');
     }
 
     $node = $nodelist->item(0);

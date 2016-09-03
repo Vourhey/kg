@@ -22,7 +22,7 @@ function moveFilm() {
   });
 }
 
-function addFilms() {
+function addFilms(tablename) {
   $('#nofilmstr').remove();
 
   var filmlist = $('#addfilmstextarea').val().split('\n');
@@ -30,7 +30,7 @@ function addFilms() {
 
   var i = 0;
   console.log("POST: " + filmlist[i]);
-  $.post("add.php", {addfilm: filmlist[i]}, function(data) {
+  $.post("add.php", {addfilm: filmlist[i], table: tablename}, function(data) {
     var tmp = $('#filmtable > tbody').html();
     $('#filmtable > tbody').html(data + tmp);
   });
@@ -40,7 +40,7 @@ function addFilms() {
     (function loops(){
       setTimeout(function() {
         console.log("POST: " + filmlist[i]);
-        $.post("add.php", {addfilm: filmlist[i]}, function(data) {
+        $.post("add.php", {addfilm: filmlist[i], table: tablename}, function(data) {
           var tmp = $('#filmtable > tbody').html();
           $('#filmtable > tbody').html(data + tmp);
         });
@@ -49,5 +49,15 @@ function addFilms() {
           loops();
       }, getRandom(10000, 30000));
     })();
-  }  
+  }
+}
+
+function replaceFilm(tablename) {
+  var film = $('#addfilmstextarea').val();
+  console.log(film);
+
+  $.post("add.php", {addfilm: film, table: tablename, replace: getIds()}, function(data) {
+    $('.editbox:checked').parent('td').parent('tr').replaceWith(data);
+    $('#addfilmstextarea').val('');
+  });
 }

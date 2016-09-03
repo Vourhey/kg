@@ -33,7 +33,8 @@
   <?php } ?>
 
   <textarea id="addfilmstextarea" rows=1 cols=80></textarea> 
-  <button onclick="addFilms()">Add</button> <br><br>
+  <button onclick="addFilms('<?=$tablename?>')">Add</button> 
+  <button onclick="replaceFilm('<?=$tablename?>')">Replace</button><br><br>
 
   <?php
     printAll($tablename);
