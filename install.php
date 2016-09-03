@@ -14,7 +14,8 @@
             genres TEXT NOT NULL,
             rating FLOAT NOT NULL,
             imdb FLOAT NOT NULL,
-            runtime VARCHAR(50) NOT NULL
+            runtime VARCHAR(50) NOT NULL,
+            UNIQUE KEY (film_url)
           );";
 
   $conn->query($sql);

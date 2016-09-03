@@ -1,0 +1,31 @@
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+table, td {
+  border: 1px solid black;
+}
+
+td {
+  vertical-align: middle;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+td:first-child {
+  width: 20px;
+}
+
+td:last-child {
+  width: 130px;
+}
+
+thead {
+  font-weight: bold;
+}
+
+.poster {
+  height: 120px;
+  width: auto;
+}

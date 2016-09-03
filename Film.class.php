@@ -1,7 +1,9 @@
 <?php
 
 class Film {
-  public $img;                // contains url to film's poster
+  public $id;
+  public $filmlink;
+  public $img_link;           // contains url to film's poster
   public $name;               // film name
   public $englishName = "";   // foreign film name
   public $directors = "";     // list of directors
@@ -14,10 +16,10 @@ class Film {
 
   private $xpath;
 
-  function __construct($xpath) {
+  public function fromXPath($xpath) {
     $this->xpath = $xpath;
 
-    $this->img = $this->queryImage();
+    $this->img_link = $this->queryImage();
     $this->name = $this->queryName();
     $this->englishName = $this->queryEnglishName();
     $this->directors = $this->queryDirectors();
@@ -27,6 +29,21 @@ class Film {
     $this->rating = $this->queryRating();
     $this->imdb = $this->queryImdb();
     $this->runtime = $this->queryRuntime();
+  }
+
+  public function fromRow($row) {
+    $this->id = $row['id'];
+    $this->filmlink = $row['film_url'];
+    $this->img_link = $row['img_link'];
+    $this->name = $row['name'];
+    $this->englishName = $row['englishName'];
+    $this->directors = $row['directors'];
+    $this->year = $row['year'];
+    $this->countries = $row['countries'];
+    $this->genres = $row['genres'];
+    $this->rating = $row['rating'];
+    $this->imdb = $row['imdb'];
+    $this->runtime = $row['runtime'];
   }
 
   private function queryImage() {
@@ -63,9 +80,9 @@ class Film {
     $_countries = $this->xpath->query('//td/div/a[contains(@href,"m_act%5Bcountry%5D")]');
     $result = "";
     foreach ($_countries as $c) {
-      $resutl .= $c->textContent.', ';
+      $result .= $c->textContent.', ';
     }
-    return substr($resutl, 0, -2);
+    return substr($result, 0, -2);
   }
 
   private function queryGenres() {

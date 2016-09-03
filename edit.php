@@ -1,35 +1,46 @@
 <?php
 
-require_once('dbconnect.php');
+require_once('core.php');
 
 $method = $_GET['method'];
+$tablename = $_GET['table'];
 
 if($method == 'delete') {
-  $sql = "DELETE FROM filmlist WHERE id in (".$_GET['ids'].")";
+  $sql = "DELETE FROM $tablename WHERE id in (".$_GET['ids'].")";
+  $conn->query($sql);
+
+  printAll($tablename);
+}
+
+if($method == 'move') {
+  $logfile = fopen("log.txt", 'a');
+  $timestamp = date("H:i:s");
+  fwrite($logfile, "$timestamp move method\n");
+
+  $sql = "SELECT * FROM filmlist WHERE id=".$_GET['ids'];
+  
+  $film = new Film;
+
+  $timestamp = date("H:i:s");
+  fwrite($logfile, "$timestamp created film\n");
+
+  $row = $conn->query($sql);
+
+  $timestamp = date("H:i:s");
+  fwrite($logfile, "$timestamp got ".print_r($row,1)."\n");
+
+  $film->fromRow($row->fetch_assoc());
+
+  
+  $timestamp = date("H:i:s");
+  fwrite($logfile, "$timestamp $sql\n$film\n");
+  fclose($logfile);
+
+  $sql = "INSERT INTO watched (img_link, film_url, name, englishName, directors, year, countries, genres, rating, imdb, runtime) VALUES ('".$film->img_link."','".$film->filmlink."','".$film->name."','".$film->englishName."','".$film->directors."','".$film->year."','".$film->countries."','".$film->genres."','".$film->rating."','".$film->imdb."','".$film->runtime."')";
+  $conn->query($sql);
+
+  $sql = "DELETE FROM filmlist WHERE id=".$_GET['ids'];
   $conn->query($sql);
 }
-
-$sql = "SELECT * FROM filmlist";
-$result = $conn->query($sql);
-if($result->num_rows > 0) { 
-  while($row = $result->fetch_assoc()) {
-    echo "
-      <tr>
-        <td><input class='editbox' type='checkbox' value='".$row['id']."'>
-        <td><img src='".$row['img_link']."' height=120 width=auto></td>
-        <td>".$row['name']." (".$row['englishName'].")</td>
-        <td>".$row['directors']."</td>
-        <td>".$row['year']."</td>
-        <td>".$row['countries']."</td>
-        <td>".$row['genres']."</td>
-        <td>".$row['rating']."</td>
-        <td>".$row['imdb']."</td>
-        <td>".$row['runtime']."</td>
-      </tr>";
-  }
-} else {
-  echo "<tr><td>You don't have films!</td></tr>";
-}
-
 
 $conn->close();
