@@ -69,13 +69,13 @@ if(!empty($_POST['addfilm'])) {
            "','".$film->year."','".$film->countries."','".$film->genres."','".$film->rating.
            "','".$film->imdb."','".$film->runtime."')";
 
-    errorLog(111, "SQL: ".$sql, "add.php", 71);
-    errorLog(289, "Error: ".var_export($conn, true), "add.php", 72);
+  //  errorLog(111, "SQL: ".$sql, "add.php", 71);
+  //  errorLog(289, "Error: ".var_export($conn, true), "add.php", 72);
 
     $result = $conn->query($sql);
 
     $film->id = $conn->insert_id;
-    errorLog(321, "Result ".$film->id, "add.php", 48);
+   // errorLog(321, "Result ".$film->id, "add.php", 48);
   }
 
   printRow($film);

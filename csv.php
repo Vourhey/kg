@@ -31,11 +31,12 @@ if($method == 'export') {
 
   while( !feof($import) ) {
     $row = fgetcsv($import);
+    $row[3] = $conn->real_escape_string($row[3]);
     $row[8] = str_replace(',', '.', $row[8]);
     $row[9] = str_replace(',', '.', $row[9]);
     $row = implode("','", $row);
 
-    $sql = "INSERT INTO $tablename (img_link,film_url,name,englishName,directors,year,countries,genres,rating,imdb,runtime) VALUES ('".$row."')";
+    $sql = "INSERT INTO `$tablename` (img_link,film_url,name,englishName,directors,year,countries,genres,rating,imdb,runtime) VALUES ('".$row."')";
     $conn->query($sql);
   }
   fclose($import);

@@ -29,3 +29,13 @@ thead {
   height: 120px;
   width: auto;
 }
+
+textarea#addfilmstextarea {
+  display: inline-block; 
+  width: auto; 
+  height: 34px;
+}
+
+.form-control {
+  display: inline-block;
+}

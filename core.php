@@ -37,7 +37,7 @@ function printAll($tablename) {
     $sql .= " ORDER BY name";
   }
 
-//  $sql .= " LIMIT 0,10";
+  //$sql .= " LIMIT 0,50";
 
   $result = $conn->query($sql);
   if($result->num_rows > 0) { 
