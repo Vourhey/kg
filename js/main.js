@@ -1,3 +1,44 @@
+$(function() {
+  console.log("Document is loaded!");
+
+  loadAll();
+
+  $('#searchinput').on("change paste keyup", searchFilm);
+});
+
+function loadAll() {
+  console.log('Load all');
+  $('#searchinput').data('oldVal', "");
+  $.get("search.php", function(data) {
+    $('#tablebody').html(data);
+    $('.loader').hide();
+  });  
+}
+
+function searchFilm() {
+  var s = $(this);
+
+  console.log('"' + s.val() + '"');
+  console.log('"' + s.data('oldVal') + '"');
+
+  if(s.val()) {
+    if(s.val() != s.data('oldVal')) {
+      $('#tablebody').empty();
+      $('.loader').show();
+   
+      console.log(s.val());
+      $.get("search.php?query=" + s.val(), function(data) {
+        $('#tablebody').html(data);
+        $('.loader').hide();
+      });
+    }
+    s.data('oldVal', s.val());
+  } else if(s.data('oldVal')) {
+    loadAll();
+  }
+}
+
+/********* TODO ************
 function getIds() {
   var ids = $('.editbox:checked').map(function() { return this.value; }).get();
   console.log(ids);
@@ -11,7 +52,7 @@ function getRandom(min, max) {
 function deleteFilms(tablename) {
   console.log(tablename);
   $.get("edit.php?table=" + tablename + "&method=delete&ids=" + getIds(), function(data){
-    $('#filmtable ').html(data);
+    $('#filmtable > tbody').html(data);
   });
 }
 
@@ -61,3 +102,5 @@ function replaceFilm(tablename) {
     $('#addfilmstextarea').val('');
   });
 }
+
+*/

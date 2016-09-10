@@ -6,6 +6,8 @@
   } else {
     $tablename = 'filmlist';
   }
+
+  $tablename = 'testdb';
 ?>
 
 <!DOCTYPE html>
@@ -14,55 +16,66 @@
     <meta charset="utf-8">
     <title>KinopoiskGrabber</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/main.js"></script>
   </head>
   <body>
 
-  <nav class="navbar navbar-fixed-top">
-    <div class="container">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <select class="form-control" onchange="top.location=this.value">
+  <!-- Top navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <select class="form-control" onchange="window.location.href = this.value">
             <option value="/" <?php if($tablename == 'filmlist') echo 'selected'; ?> >Filmlist</option>
             <option value="/?watched" <?php if($tablename == 'watched') echo 'selected'; ?> >Watched</option>
           </select>
         </div>
-        <div class="col-sm-2">
-          <span class="btn-group">
-            <button type="button" class="btn" onclick="deleteFilms('<?=$tablename?>')">delete</button> 
+      </form>
 
-            <?php if($tablename == 'filmlist') { ?>
-              <button class="btn" onclick="moveFilm()">move</button>
-            <?php } ?>
-          </span>
+      <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input id="searchinput" type="text" placeholder="Search, add or replace" class="form-control">
         </div>
-        <div class="col-sm-8">
-          <form class="form-inline">
-            <div class="form-group">
-              <textarea id="addfilmstextarea" row="1" class="form-control"></textarea>
-            </div>
-            <div class="btn-group" style="vertical-align: top;">
-              <button class="btn" onclick="addFilms('<?=$tablename?>')">Add</button> 
-              <button class="btn" onclick="replaceFilm('<?=$tablename?>')">Replace</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      </form>
     </div>
   </nav>
 
+  <!-- Bottom navbar -->
+  <nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+      <form class="navbar-form navbar-left">
+        <div class="checkbox">
+          <label><input type="checkbox"> Check all</label>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container-fluid" style="margin-top: 70px">
+    <table id='filmtable' class='table table-striped table-hover'>
+      <thead>
+        <tr>
+          <td></td>
+          <td>Постер</td>
+          <td>Название</td>
+          <td>Режисер</td>
+          <td>Год</td>
+          <td>Страна</td>
+          <td>Жанр</td>
+          <td>Рейтинг</td>
+          <td>IMDb</td>
+          <td>Время</td>
+        </tr>
+      </thead>
+      <tbody id='tablebody'>
+      </tbody>
+    </table>
+    <div class="loader"></div>
+  </div>
   
-
-  <br><br>
-
-  <?php
-    printAll($tablename);
-
-    $conn->close();
-  ?>
   </body>
 </html>

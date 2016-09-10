@@ -1,4 +1,4 @@
-table {
+/*table {
   table-layout: fixed;
   border-collapse: collapse;
 }
@@ -16,10 +16,10 @@ td {
 td:first-child {
   width: 20px;
 }
-
+*/
 td:last-child {
   width: 130px;
-}
+} 
 
 thead {
   font-weight: bold;
@@ -30,12 +30,33 @@ thead {
   width: auto;
 }
 
+.loader {
+  border: 2px solid #f3f3f3; /* Light grey */
+  border-top: 3px solid blue; /* Blue */
+  border-bottom: 3px solid blue;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 10px auto;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/*
 textarea#addfilmstextarea {
   display: inline-block; 
   width: auto; 
   height: 34px;
-}
+} 
 
 .form-control {
   display: inline-block;
-}
+} 
+
+.form-group {
+  margin-top: 10px;
+} */

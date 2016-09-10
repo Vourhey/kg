@@ -13,9 +13,11 @@ set_error_handler("errorLog");
 
 function printRow($film) {
   echo "<tr>
-          <td><input class='editbox' type='checkbox' value='".$film->id."'></td>
-          <td><img src='".$film->img_link."' class='poster'></td>
-          <td><a href='".$film->filmlink."' target='_blank'>".$film->name."</a>";
+          <td><input class='editbox' type='checkbox' value='".$film->id."'></td>".
+          /* временно, чтобы не грузить постоянно картинки */
+          /* "<td><img src='".$film->img_link."' class='poster'></td>" */
+          "<td><img src='#' class='poster'></td>".
+          "<td><a href='".$film->filmlink."' target='_blank'>".$film->name."</a>";
       if(!empty($film->englishName)) {
         echo "<br>(".$film->englishName.")";
       }
@@ -37,34 +39,19 @@ function printAll($tablename) {
     $sql .= " ORDER BY name";
   }
 
-  //$sql .= " LIMIT 0,50";
+  $sql .= " LIMIT 0,50";
 
   $result = $conn->query($sql);
   if($result->num_rows > 0) { 
-    echo "<table id='filmtable'>
-      <thead>
-        <tr>
-          <td></td>
-          <td>Постер</td>
-          <td>Название</td>
-          <td>Режисер</td>
-          <td>Год</td>
-          <td>Страна</td>
-          <td>Жанр</td>
-          <td>Рейтинг</td>
-          <td>IMDb</td>
-          <td>Время</td>
-        </tr>
-      </thead>
-      <tbody>";
+    
     while($row = $result->fetch_assoc()) {
       $film = new Film;
       $film->fromRow($row);
 
       printRow($film);
     }
-    echo "</tbody></table>";
+
   } else {
-    echo "<table id='filmtable'><tbody><tr id='nofilmstr'><td>You don't have watched films!</td></tr></tbody></table>";
+    echo "<tr id='nofilmstr'><td colspan='10'>You don't have watched films!</td></tr>";
   }
 }
