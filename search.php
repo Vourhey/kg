@@ -10,7 +10,12 @@ $table = $_GET['table'];
 errorLog('900', $table, "search.php", 8);
 
 if(empty($_GET['query'])) {
-  $sql = "SELECT * FROM `$table` ORDER BY name LIMIT 0,50"; // 
+  $sql = "SELECT * FROM `$table` ";
+  if($table == 'filmlist') {
+    $sql .= "ORDER BY name";
+  }
+  $sql .= " LIMIT 0,50"; 
+   
   $result = $conn->query($sql);
 
   if($result->num_rows > 0) { 

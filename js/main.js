@@ -7,6 +7,16 @@ $(function() {
 
   $('#searchinput').on("change paste keyup", searchFilm);
   $('#tablebody').on('click', '.plusbutton', moveFromTempToFilmlist);
+  $('.btn-group').hide();
+  $('#tablebody').on('click', '.editbox', function() {
+    if($('.editbox:checked').length == 0) {
+      $('.btn-group').hide();
+    } else {
+      $('.btn-group').show();
+    }
+  });
+  $('#movebtn').click(moveFilms);
+  $('#deletebtn').click(deleteFilms);
 });
 
 function loadAll() {
@@ -61,29 +71,36 @@ function moveFromTempToFilmlist() {
   });
 }
 
-/********* TODO ************
 function getIds() {
   var ids = $('.editbox:checked').map(function() { return this.value; }).get();
   console.log(ids);
   return ids.join(',');
 }
 
+function moveFilms(e) {
+  console.log("moving films");
+  e.preventDefault();   // preventing reload
+  $.get("edit.php?method=move&ids=" + getIds(), function(){
+    $('.editbox:checked').parent('td').parent('tr').remove();
+    $('.btn-group').hide();
+  });
+}
+
+function deleteFilms(e) {
+  e.preventDefault();
+  console.log("deleting films");
+  $.get("edit.php?table=" + $('#searchinput').data('table') + "&method=delete&ids=" + getIds(), 
+        function(){
+          $('.editbox:checked').parent('td').parent('tr').remove();
+          $('.btn-group').hide();     
+        });
+}
+
+/********* TODO ************
+
+
 function getRandom(min, max) {
   return Math.floor((Math.random() * (max - min) + min));
-}
-
-function deleteFilms(tablename) {
-  console.log(tablename);
-  $.get("edit.php?table=" + tablename + "&method=delete&ids=" + getIds(), function(data){
-    $('#filmtable > tbody').html(data);
-  });
-}
-
-function moveFilm() {
-  $.get("edit.php?table=filmlist&method=move&ids=" + getIds(), function(){
-    var row = $('.editbox:checked').parent('td').parent('tr');
-    row.remove();
-  });
 }
 
 function addFilms(tablename) {

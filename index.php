@@ -31,12 +31,16 @@
             <option value="/" <?php if($tablename == 'filmlist') echo 'selected'; ?> >Filmlist</option>
             <option value="/?watched" <?php if($tablename == 'watched') echo 'selected'; ?> >Watched</option>
           </select>
+          <div class="btn-group">
+            <button id="movebtn" class="btn btn-default">Move</button>
+            <button id="deletebtn" class="btn btn-default">Delete</button>  
+          </div>
         </div>
       </form>
 
       <form class="navbar-form navbar-right">
         <div class="form-group">
-          <input id="searchinput" type="text" placeholder="Search, add or replace" class="form-control" data-table= <?php echo "'$tablename'"; ?> >
+          <input id="searchinput" type="search" placeholder="Search, add or replace" class="form-control" data-table= <?php echo "'$tablename'"; ?> >
         </div>
       </form>
     </div>
