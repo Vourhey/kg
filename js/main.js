@@ -8,8 +8,10 @@ $(function() {
 
 function loadAll() {
   console.log('Load all');
-  $('#searchinput').data('oldVal', "");
-  $.get("search.php", function(data) {
+  var si = $('#searchinput');
+  si.data('oldVal', "");
+
+  $.get("search.php?table="+si.data('table'), function(data) {
     $('#tablebody').html(data);
     $('.loader').hide();
   });  
@@ -17,6 +19,11 @@ function loadAll() {
 
 function searchFilm() {
   var s = $(this);
+
+  if(s.jqxhr) {
+    console.log("Canceling previous ajax request");
+    s.jqxhr.abort();
+  }
 
   console.log('"' + s.val() + '"');
   console.log('"' + s.data('oldVal') + '"');
@@ -27,10 +34,12 @@ function searchFilm() {
       $('.loader').show();
    
       console.log(s.val());
-      $.get("search.php?query=" + s.val(), function(data) {
-        $('#tablebody').html(data);
-        $('.loader').hide();
-      });
+      s.jqxhr = 
+        $.get("search.php?query=" + encodeURIComponent(s.val()) + "&table="+s.data('table'), function(data) {
+          $('#tablebody').html(data);
+          $('.loader').hide();
+        });
+  //    console.log(s.jqxhr);
     }
     s.data('oldVal', s.val());
   } else if(s.data('oldVal')) {

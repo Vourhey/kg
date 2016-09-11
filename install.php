@@ -1,11 +1,9 @@
 <?php
   require_once('dbconnect.php');
 
- /* $sql = "CREATE TABLE filmlist 
+  $sql = "CREATE TABLE `filmlist` 
           (
-            id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            img_link VARCHAR(100) NOT NULL,
-            film_url VARCHAR(100) NOT NULL,
+            kpid INT(11) NOT NULL,
             name VARCHAR(255) NOT NULL,
             englishName VARCHAR(255) NOT NULL,
             directors TEXT NOT NULL,
@@ -15,18 +13,17 @@
             rating FLOAT NOT NULL,
             imdb FLOAT NOT NULL,
             runtime VARCHAR(50) NOT NULL,
-            UNIQUE KEY (film_url)
+            UNIQUE KEY (kpid)
           );";
-
   $conn->query($sql);
 
-  $sql = str_replace('filmlist', 'watched', $sql); */
-  
-  $sql = "CREATE TABLE testdb 
+  $sql = str_replace('filmlist', 'temp', $sql);
+  $conn->query($sql);
+
+  $sql = "CREATE TABLE `watched` 
           (
             id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            img_link VARCHAR(100) NOT NULL,
-            film_url VARCHAR(100) NOT NULL,
+            kpid INT(11) NOT NULL,
             name VARCHAR(255) NOT NULL,
             englishName VARCHAR(255) NOT NULL,
             directors TEXT NOT NULL,
@@ -36,7 +33,7 @@
             rating FLOAT NOT NULL,
             imdb FLOAT NOT NULL,
             runtime VARCHAR(50) NOT NULL,
-            UNIQUE KEY (film_url)
+            UNIQUE KEY (kpid)
           );";
   $conn->query($sql);
 

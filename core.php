@@ -13,10 +13,8 @@ set_error_handler("errorLog");
 
 function printRow($film) {
   echo "<tr>
-          <td><input class='editbox' type='checkbox' value='".$film->id."'></td>".
-          /* временно, чтобы не грузить постоянно картинки */
-          /* "<td><img src='".$film->img_link."' class='poster'></td>" */
-          "<td><img src='#' class='poster'></td>".
+          <td><input class='editbox' type='checkbox' value='".$film->kpid."'></td>".
+          "<td><img src='".$film->img_link."' class='poster'></td>".
           "<td><a href='".$film->filmlink."' target='_blank'>".$film->name."</a>";
       if(!empty($film->englishName)) {
         echo "<br>(".$film->englishName.")";
@@ -29,7 +27,7 @@ function printRow($film) {
           <td>".$film->rating."</td>
           <td>".$film->imdb."</td>
           <td>".$film->runtime."</td>
-        </tr>";
+        </tr>\n";
 }
 
 function printAll($tablename) {

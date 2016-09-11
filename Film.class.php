@@ -1,7 +1,7 @@
 <?php
 
 class Film {
-  public $id;
+  public $kpid;
   public $filmlink;
   public $img_link;           // contains url to film's poster
   public $name;               // film name
@@ -14,6 +14,7 @@ class Film {
   public $imdb;               // rating by imdb
   public $runtime;            // how long the film lasts
 
+/*
   private $xpath;
 
   public function fromXPath($xpath) {
@@ -29,12 +30,12 @@ class Film {
     $this->rating = $this->queryRating();
     $this->imdb = $this->queryImdb();
     $this->runtime = $this->queryRuntime();
-  }
+  } */
 
   public function fromRow($row) {
-    $this->id = $row['id'];
-    $this->filmlink = $row['film_url'];
-    $this->img_link = $row['img_link'];
+    $this->kpid = $row['kpid'];
+    $this->filmlink = "https://www.kinopoisk.ru/film/".$this->kpid."/";
+    $this->img_link = "postres/".$this->kpid.".jpg";
     $this->name = $row['name'];
     $this->englishName = $row['englishName'];
     $this->directors = $row['directors'];
@@ -46,6 +47,7 @@ class Film {
     $this->runtime = $row['runtime'];
   }
 
+/*
   private function queryImage() {
     $nodelist = $this->xpath->query('//*[@id="photoBlock"]/div[1]/a/img');
     if($nodelist->length == 0) {
@@ -100,5 +102,5 @@ class Film {
 
   private function queryRuntime() {
     return $this->xpath->query('//td[@id="runtime"]')->item(0)->textContent;
-  }
+  } */
 }

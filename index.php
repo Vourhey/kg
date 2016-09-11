@@ -6,8 +6,6 @@
   } else {
     $tablename = 'filmlist';
   }
-
-  $tablename = 'testdb';
 ?>
 
 <!DOCTYPE html>
@@ -38,13 +36,14 @@
 
       <form class="navbar-form navbar-right">
         <div class="form-group">
-          <input id="searchinput" type="text" placeholder="Search, add or replace" class="form-control">
+          <input id="searchinput" type="text" placeholder="Search, add or replace" class="form-control" data-table= <?php echo "'$tablename'"; ?> >
         </div>
       </form>
     </div>
   </nav>
 
   <!-- Bottom navbar -->
+  <!-- under construction
   <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
       <form class="navbar-form navbar-left">
@@ -53,7 +52,7 @@
         </div>
       </form>
     </div>
-  </nav>
+  </nav> -->
 
   <div class="container-fluid" style="margin-top: 70px">
     <table id='filmtable' class='table table-striped table-hover'>
