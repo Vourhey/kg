@@ -1,5 +1,8 @@
 <?php
 
+require_once ('Snoopy.class.php');
+require_once('core.php');
+
 class Film {
   public $kpid;
   public $filmlink;
@@ -14,13 +17,75 @@ class Film {
   public $imdb;               // rating by imdb
   public $runtime;            // how long the film lasts
 
-/*
   private $xpath;
 
-  public function fromXPath($xpath) {
-    $this->xpath = $xpath;
+  function __construct() {
+    $a = func_get_args(); 
+    $i = func_num_args(); 
+    if (method_exists($this,$f='__construct'.$i)) { 
+        call_user_func_array(array($this,$f),$a); 
+    } 
+  }
 
-    $this->img_link = $this->queryImage();
+  function __construct1($query) {
+    errorLog('1', "Inside construct1", 'Film.class.php', 27);
+
+    // TODO check if there was the same request
+    
+    $client = new Snoopy();
+    $client->referer = "http://kinopoisk.ru/";
+    $client->agent = "Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0";
+
+    if(substr($query, 0, 7) != "http://" && substr($query, 0, 8) != "https://") {
+      $url = "https://www.kinopoisk.ru/index.php?first=yes&kp_query=".urlencode($query);
+    } else {
+      $url = $query;
+    }
+
+    errorLog('2', $url, 'Film.class.php', 39);
+
+    $html = $client->fetch($url)->results;
+
+    if($client->error) {
+      errorLog("666", $client->error, "add.php", 36);
+    }
+
+    if(empty($html)) {
+      // hack against 302 error
+      $url = $client->_redirectaddr;
+      $html = $client->fetch($url)->results;
+    }
+
+    if(empty($client->lastredirectaddr)) {
+      $this->filmlink = $url;
+    } else {
+      $this->filmlink = $client->lastredirectaddr;  
+    }
+
+    $this->kpid = substr($this->filmlink, 34);
+    $this->kpid = substr($this->kpid, 0, -1);
+
+    errorLog("abc", $this->kpid, "Film.class.php", 56);
+
+    libxml_use_internal_errors(true);
+    $dom = new DOMDocument();
+    if(!$dom->loadHTML($html))
+      die("Fail on loading");
+
+    $this->xpath = new DOMXPath($dom);
+
+    $this->downloadPoster();
+    $this->fillFromXPath();
+  }
+
+  private function downloadPoster() {
+    $img_link = $this->queryImage();
+
+    file_put_contents("posters/".$this->kpid.".jpg", fopen($img_link, "r"));
+  }
+
+  private function fillFromXPath() {
+    $this->img_link = "posters/".$this->kpid.".jpg";
     $this->name = $this->queryName();
     $this->englishName = $this->queryEnglishName();
     $this->directors = $this->queryDirectors();
@@ -30,24 +95,27 @@ class Film {
     $this->rating = $this->queryRating();
     $this->imdb = $this->queryImdb();
     $this->runtime = $this->queryRuntime();
-  } */
-
-  public function fromRow($row) {
-    $this->kpid = $row['kpid'];
-    $this->filmlink = "https://www.kinopoisk.ru/film/".$this->kpid."/";
-    $this->img_link = "postres/".$this->kpid.".jpg";
-    $this->name = $row['name'];
-    $this->englishName = $row['englishName'];
-    $this->directors = $row['directors'];
-    $this->year = $row['year'];
-    $this->countries = $row['countries'];
-    $this->genres = $row['genres'];
-    $this->rating = $row['rating'];
-    $this->imdb = $row['imdb'];
-    $this->runtime = $row['runtime'];
   }
 
-/*
+  public static function fromRow($row) {
+    $film = new Film();
+    
+    $film->kpid = $row['kpid'];
+    $film->filmlink = "https://www.kinopoisk.ru/film/".$film->kpid."/";
+    $film->img_link = "posters/".$film->kpid.".jpg";
+    $film->name = $row['name'];
+    $film->englishName = $row['englishName'];
+    $film->directors = $row['directors'];
+    $film->year = $row['year'];
+    $film->countries = $row['countries'];
+    $film->genres = $row['genres'];
+    $film->rating = $row['rating'];
+    $film->imdb = $row['imdb'];
+    $film->runtime = $row['runtime'];
+
+    return $film;
+  }
+
   private function queryImage() {
     $nodelist = $this->xpath->query('//*[@id="photoBlock"]/div[1]/a/img');
     if($nodelist->length == 0) {
@@ -102,5 +170,5 @@ class Film {
 
   private function queryRuntime() {
     return $this->xpath->query('//td[@id="runtime"]')->item(0)->textContent;
-  } */
+  }
 }

@@ -17,8 +17,14 @@ td:first-child {
   width: 20px;
 }
 */
+
+.table tbody>tr>td { 
+  vertical-align: middle;
+  text-align: center;
+}
+
 td:last-child {
-  width: 130px;
+  min-width: 130px;
 } 
 
 thead {

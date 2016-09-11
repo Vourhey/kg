@@ -1,9 +1,12 @@
 $(function() {
   console.log("Document is loaded!");
 
+  currentXHR = null;
+
   loadAll();
 
   $('#searchinput').on("change paste keyup", searchFilm);
+  $('#tablebody').on('click', '.plusbutton', moveFromTempToFilmlist);
 });
 
 function loadAll() {
@@ -20,9 +23,10 @@ function loadAll() {
 function searchFilm() {
   var s = $(this);
 
-  if(s.jqxhr) {
+  if(currentXHR) {
     console.log("Canceling previous ajax request");
-    s.jqxhr.abort();
+    console.log(currentXHR);
+    currentXHR.abort();
   }
 
   console.log('"' + s.val() + '"');
@@ -34,17 +38,27 @@ function searchFilm() {
       $('.loader').show();
    
       console.log(s.val());
-      s.jqxhr = 
+      currentXHR = 
         $.get("search.php?query=" + encodeURIComponent(s.val()) + "&table="+s.data('table'), function(data) {
           $('#tablebody').html(data);
           $('.loader').hide();
         });
-  //    console.log(s.jqxhr);
+      //console.log(s.jqxhr);
     }
     s.data('oldVal', s.val());
   } else if(s.data('oldVal')) {
     loadAll();
   }
+}
+
+function moveFromTempToFilmlist() {
+  console.log("moveFromTempToFilmlist");
+
+  var row = $(this).parent('td').parent('tr');
+  var kpid = $(this).val();
+  $.get("edit.php?method=moveToFilmlist&ids=" + kpid, function(data) {
+    row.replaceWith(data);
+  });
 }
 
 /********* TODO ************
