@@ -17,6 +17,8 @@ class Film {
   public $imdb;               // rating by imdb
   public $runtime;            // how long the film lasts
 
+  public $error = "";
+
   private $xpath;
 
   function __construct() {
@@ -28,7 +30,7 @@ class Film {
   }
 
   function __construct1($query) {
-    errorLog('1', "Inside construct1", 'Film.class.php', 27);
+    errorLog('1', "Inside construct1", __FILE__, __LINE__);
 
     // TODO check if there was the same request
     
@@ -42,40 +44,46 @@ class Film {
       $url = $query;
     }
 
-    errorLog('2', $url, 'Film.class.php', 39);
+    errorLog('2', $url, __FILE__, __LINE__);
 
     $html = $client->fetch($url)->results;
 
-    if($client->error) {
-      errorLog("666", $client->error, "add.php", 36);
-    }
-
-    if(empty($html)) {
-      // hack against 302 error
-      $url = $client->_redirectaddr;
-      $html = $client->fetch($url)->results;
-    }
-
-    if(empty($client->lastredirectaddr)) {
-      $this->filmlink = $url;
+    // TODO если изначально вставлена ссылка, то lastredirectaddr тоже == ''
+    if($client->lastredirectaddr == '') {
+      errorLog('2', "Can't fetch film", __FILE__, __LINE__);
+      $this->error = "There were an error";
     } else {
-      $this->filmlink = $client->lastredirectaddr;  
+      if($client->error) {
+        errorLog("666", $client->error, __FILE__, __LINE__);
+      }
+
+      if(empty($html)) {
+        // hack against 302 error
+        $url = $client->_redirectaddr;
+        $html = $client->fetch($url)->results;
+      }
+
+      if(empty($client->lastredirectaddr)) {
+        $this->filmlink = $url;
+      } else {
+        $this->filmlink = $client->lastredirectaddr;  
+      }
+
+      $this->kpid = substr($this->filmlink, 34);
+      $this->kpid = substr($this->kpid, 0, -1);
+
+      errorLog("abc", $this->kpid, __FILE__, __LINE__);
+
+      libxml_use_internal_errors(true);
+      $dom = new DOMDocument();
+      if(!$dom->loadHTML($html))
+        die("Fail on loading");
+
+      $this->xpath = new DOMXPath($dom);
+
+      $this->downloadPoster();
+      $this->fillFromXPath();  
     }
-
-    $this->kpid = substr($this->filmlink, 34);
-    $this->kpid = substr($this->kpid, 0, -1);
-
-    errorLog("abc", $this->kpid, "Film.class.php", 56);
-
-    libxml_use_internal_errors(true);
-    $dom = new DOMDocument();
-    if(!$dom->loadHTML($html))
-      die("Fail on loading");
-
-    $this->xpath = new DOMXPath($dom);
-
-    $this->downloadPoster();
-    $this->fillFromXPath();
   }
 
   private function downloadPoster() {

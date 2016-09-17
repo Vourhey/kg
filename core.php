@@ -12,7 +12,7 @@ function errorLog($errno, $errstr, $errfile, $errline) {
 set_error_handler("errorLog");
 
 function printRow($film, $button = null) {
-  echo "<tr><td>"; 
+  echo "<tr><td class='tdclickable'>"; 
 
   if($button) {
     echo "<button class='plusbutton' value='".$film->kpid."'>".

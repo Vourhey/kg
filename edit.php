@@ -23,10 +23,10 @@ if($method == 'moveToFilmlist') {
   printRow($film);
 } else if($method == 'move') {
   $sql = "SELECT * FROM filmlist WHERE kpid in(".$_GET['ids'].")";
-  errorLog('77', $sql, "edit.php", 26);
+  errorLog('77', $sql, __FILE__, __LINE__);
   $result = $conn->query($sql);
 
-  errorLog('77', "Result ".$conn->error, "edit.php", 29);
+  errorLog('77', "Result ".$conn->error, __FILE__, __LINE__);
 
   if($result && $result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {

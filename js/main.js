@@ -19,10 +19,29 @@ $(function() {
   $('#deletebtn').click(deleteFilms);
 });
 
+function getTimestamp() {
+  var now = new Date();
+  var h = now.getHours();
+  if(h < 10) {
+    h = '0' + h;
+  } 
+  var m = now.getMinutes();
+  if(m < 10) {
+    m = '0' + m;
+  }
+  var s = now.getSeconds();
+  if(s < 10) { 
+    s = '0' + s;
+  }
+  return h + ":" + m + ":" + s;
+}
+
 function loadAll() {
   console.log('Load all');
   var si = $('#searchinput');
+  si.val('');
   si.data('oldVal', "");
+  currentXHR = null;
 
   $.get("search.php?table="+si.data('table'), function(data) {
     $('#tablebody').html(data);
@@ -31,12 +50,14 @@ function loadAll() {
 }
 
 function searchFilm() {
+  console.log(getTimestamp() + " function searchFilm()");
   var s = $(this);
 
   if(currentXHR) {
-    console.log("Canceling previous ajax request");
+    console.log(getTimestamp() + " Canceling previous ajax request");
     console.log(currentXHR);
     currentXHR.abort();
+    currentXHR = null;
   }
 
   console.log('"' + s.val() + '"');
@@ -47,16 +68,19 @@ function searchFilm() {
       $('#tablebody').empty();
       $('.loader').show();
    
-      console.log(s.val());
+      console.log(getTimestamp() + " " + s.val());
       currentXHR = 
         $.get("search.php?query=" + encodeURIComponent(s.val()) + "&table="+s.data('table'), function(data) {
           $('#tablebody').html(data);
           $('.loader').hide();
+          currentXHR = null;
         });
       //console.log(s.jqxhr);
     }
     s.data('oldVal', s.val());
-  } else if(s.data('oldVal')) {
+  //} else if(s.data('oldVal')) {
+  //  loadAll();
+  } else {
     loadAll();
   }
 }
@@ -83,6 +107,9 @@ function moveFilms(e) {
   $.get("edit.php?method=move&ids=" + getIds(), function(){
     $('.editbox:checked').parent('td').parent('tr').remove();
     $('.btn-group').hide();
+    if($('.editbox').length == 0) { // there is no rows, and we should show all from db
+      loadAll();
+    }
   });
 }
 
@@ -95,52 +122,3 @@ function deleteFilms(e) {
           $('.btn-group').hide();     
         });
 }
-
-/********* TODO ************
-
-
-function getRandom(min, max) {
-  return Math.floor((Math.random() * (max - min) + min));
-}
-
-function addFilms(tablename) {
-  $('#nofilmstr').remove();
-
-  var filmlist = $('#addfilmstextarea').val().split('\n');
-  console.log(filmlist);
-
-  var i = 0;
-  console.log("POST: " + filmlist[i]);
-  $.post("add.php", {addfilm: filmlist[i], table: tablename}, function(data) {
-    var tmp = $('#filmtable > tbody').html();
-    $('#filmtable > tbody').html(data + tmp);
-  });
-  ++i;
-
-  if(i < filmlist.length) {
-    (function loops(){
-      setTimeout(function() {
-        console.log("POST: " + filmlist[i]);
-        $.post("add.php", {addfilm: filmlist[i], table: tablename}, function(data) {
-          var tmp = $('#filmtable > tbody').html();
-          $('#filmtable > tbody').html(data + tmp);
-        });
-        ++i;
-        if(i < filmlist.length)
-          loops();
-      }, getRandom(10000, 30000));
-    })();
-  }
-}
-
-function replaceFilm(tablename) {
-  var film = $('#addfilmstextarea').val();
-  console.log(film);
-
-  $.post("add.php", {addfilm: film, table: tablename, replace: getIds()}, function(data) {
-    $('.editbox:checked').parent('td').parent('tr').replaceWith(data);
-    $('#addfilmstextarea').val('');
-  });
-}
-
-*/
