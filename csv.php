@@ -10,6 +10,9 @@ $filename = $_GET['file'];
 
 if($method == 'export') {
   $q_export = "SELECT * FROM `$tablename`";
+  if($tablename == 'filmlist') {
+    $q_export .= " ORDER BY name";
+  }
   $export = fopen($filename, "w") or die("Can't open file $filename");
 
   $result = $conn->query($q_export);

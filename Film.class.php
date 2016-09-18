@@ -30,7 +30,7 @@ class Film {
   }
 
   function __construct1($query) {
-    errorLog('1', "Inside construct1", __FILE__, __LINE__);
+    errorLog('1', "Inside construct1 query: ".$query, __FILE__, __LINE__);
 
     // TODO check if there was the same request
     
@@ -40,8 +40,10 @@ class Film {
 
     if(substr($query, 0, 7) != "http://" && substr($query, 0, 8) != "https://") {
       $url = "https://www.kinopoisk.ru/index.php?first=yes&kp_query=".urlencode($query);
+      $direct = false;
     } else {
       $url = $query;
+      $direct = true;
     }
 
     errorLog('2', $url, __FILE__, __LINE__);
@@ -49,8 +51,9 @@ class Film {
     $html = $client->fetch($url)->results;
 
     // TODO если изначально вставлена ссылка, то lastredirectaddr тоже == ''
-    if($client->lastredirectaddr == '') {
+    if(!$direct && $client->lastredirectaddr == '') {
       errorLog('2', "Can't fetch film", __FILE__, __LINE__);
+     // errorLog('2', var_export($client, true), __FILE__, __LINE__);
       $this->error = "There were an error";
     } else {
       if($client->error) {
@@ -69,8 +72,12 @@ class Film {
         $this->filmlink = $client->lastredirectaddr;  
       }
 
+      errorLog("abc", var_export(explode('/', $this->filmlink), true), __FILE__, __LINE__);
+      $this->kpid = explode('/', $this->filmlink);
+      $this->kpid = $this->kpid[count($this->kpid) - 2];
+/*
       $this->kpid = substr($this->filmlink, 34);
-      $this->kpid = substr($this->kpid, 0, -1);
+      $this->kpid = substr($this->kpid, 0, -1); */
 
       errorLog("abc", $this->kpid, __FILE__, __LINE__);
 

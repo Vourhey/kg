@@ -53,7 +53,7 @@ function searchFilm() {
   console.log(getTimestamp() + " function searchFilm()");
   var s = $(this);
 
-  if(currentXHR) {
+  if(currentXHR && s.val() != s.data('oldVal')) {
     console.log(getTimestamp() + " Canceling previous ajax request");
     console.log(currentXHR);
     currentXHR.abort();
@@ -75,11 +75,9 @@ function searchFilm() {
           $('.loader').hide();
           currentXHR = null;
         });
-      //console.log(s.jqxhr);
+      console.log(getTimestamp() + " set oldVal as " + s.val());
+      s.data('oldVal', s.val());
     }
-    s.data('oldVal', s.val());
-  //} else if(s.data('oldVal')) {
-  //  loadAll();
   } else {
     loadAll();
   }
