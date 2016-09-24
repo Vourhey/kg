@@ -28,8 +28,8 @@
       <form class="navbar-form navbar-left">
         <div class="form-group">
           <select class="form-control" onchange="window.location.href = this.value">
-            <option value="/" <?php if($tablename == 'filmlist') echo 'selected'; ?> >Filmlist</option>
-            <option value="/?watched" <?php if($tablename == 'watched') echo 'selected'; ?> >Watched</option>
+            <option value="index.php" <?php if($tablename == 'filmlist') echo 'selected'; ?> >Filmlist</option>
+            <option value="?watched" <?php if($tablename == 'watched') echo 'selected'; ?> >Watched</option>
           </select>
           <div class="btn-group">
             <button id="movebtn" class="btn btn-default">Move</button>
