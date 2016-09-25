@@ -20,7 +20,7 @@ if($method == 'moveToFilmlist') {
   $sql = "DELETE FROM `temp` WHERE kpid=".$_GET['ids'];
   $conn->query($sql);
 
-  printRow($film);
+  echo printRow($film);
 } else if($method == 'move') {
   $sql = "SELECT * FROM filmlist WHERE kpid in(".$_GET['ids'].")";
   errorLog('77', $sql, __FILE__, __LINE__);

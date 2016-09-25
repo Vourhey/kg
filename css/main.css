@@ -1,3 +1,8 @@
+#filmtable {
+  margin-top: 70px;
+  margin-bottom: 60px;
+}
+
 .table tbody>tr>td { 
   vertical-align: middle;
   text-align: center;
@@ -30,4 +35,8 @@ thead {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.pagination {
+  margin: 8px 0px;
 }

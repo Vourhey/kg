@@ -6,6 +6,7 @@
   } else {
     $tablename = 'filmlist';
   }
+  $tablename = 'testdb';
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +32,10 @@
             <option value="index.php" <?php if($tablename == 'filmlist') echo 'selected'; ?> >Filmlist</option>
             <option value="?watched" <?php if($tablename == 'watched') echo 'selected'; ?> >Watched</option>
           </select>
-          <div class="btn-group">
+          <div id="editButtons" class="btn-group" style="display: none;">
+          <?php if($tablename == 'filmlist') { ?>
             <button id="movebtn" class="btn btn-default">Move</button>
+          <?php } ?>
             <button id="deletebtn" class="btn btn-default">Delete</button>  
           </div>
         </div>
@@ -47,20 +50,28 @@
   </nav>
 
   <!-- Bottom navbar -->
-  <!-- under construction
-  <nav class="navbar navbar-default navbar-fixed-bottom">
+  <nav class="navbar navbar-default navbar-fixed-bottom text-center">
     <div class="container-fluid">
-      <form class="navbar-form navbar-left">
-        <div class="checkbox">
-          <label><input type="checkbox"> Check all</label>
+      <div class="navbar-form navbar-left">
+        <button id='checkallbtn' class='btn btn-default' data-checked='false'>
+          <span class="glyphicon glyphicon-unchecked"></span> Check All
+        </button>
+      </div>
+      <ul class="pagination">
+        <!-- fills from js -->
+      </ul>
+      <div class="navbar-form navbar-right">
+        <div class="btn-group">
+          <button id="scrollDown" class="btn btn-default">Down</button>
+          <button id="scrollUp" class="btn btn-default">Up</button>  
         </div>
-      </form>
+      </div>
     </div>
-  </nav> -->
+  </nav>
 
-  <div class="container-fluid" style="margin-top: 70px">
+  <div class="container-fluid">
     <table id='filmtable' class='table table-striped table-hover'>
-      <thead>
+      <thead class="text-center">
         <tr>
           <td></td>
           <td>Постер</td>

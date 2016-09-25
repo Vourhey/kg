@@ -12,29 +12,27 @@ function errorLog($errno, $errstr, $errfile, $errline) {
 set_error_handler("errorLog");
 
 function printRow($film, $button = null) {
-  echo "<tr><td class='tdclickable'>"; 
+  $out = "<tr><td class='tdclickable'>"; 
 
   if($button) {
-    echo "<button class='plusbutton' value='".$film->kpid."'>".
+    $out .= "<button class='plusbutton' value='".$film->kpid."'>".
          "<span class='glyphicon glyphicon-plus-sign'></span></button>";
   } else {
-    echo "<input class='editbox' type='checkbox' value='".$film->kpid."'>";
+    $out .= "<input class='editbox' type='checkbox' value='".$film->kpid."'>";
   }
 
-  echo "</td><td><img src='".$film->img_link."' class='poster'></td>".
+  $out .= "</td><td><img src='".$film->img_link."' class='poster'></td>".
        "<td><a href='".$film->filmlink."' target='_blank'>".$film->name."</a>";
   
   if(!empty($film->englishName)) {
-    echo "<br>(".$film->englishName.")";
+    $out .= "<br>(".$film->englishName.")";
   }
   
-  echo "</td><td>".$film->directors."</td>
-        <td>".$film->year."</td>
-        <td>".$film->countries."</td>
-        <td>".$film->genres."</td>
-        <td>".$film->rating."</td>
-        <td>".$film->imdb."</td>
-        <td>".$film->runtime."</td></tr>\n";
+  $out .= "</td><td>".$film->directors."</td><td>".$film->year."</td>".
+          "<td>".$film->countries."</td><td>".$film->genres."</td>".
+          "<td>".$film->rating."</td><td>".$film->imdb."</td><td>".$film->runtime."</td></tr>";
+
+  return $out;
 }
 
 function printAll($tablename) {
