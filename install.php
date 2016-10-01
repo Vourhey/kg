@@ -40,14 +40,31 @@
 
     $content = "
 <?php 
-\$servername = '$servername';
-\$username = '$username';
-\$password = '$password';
-\$dbname = '$dbname';
+class Database {
+  private \$servername = '$servername';
+  private \$username = '$username';
+  private \$password = '$password';
+  private \$dbname = '$dbname';
+  private static \$db;
+  private \$connection;
 
-\$conn = new mysqli(\$servername, \$username, \$password, \$dbname);
-if(\$conn->connect_error) {
-  die('Connection failed: '.\$conn->connect_error);
+  private function __construct() {
+    \$this->connection = new mysqli(\$this->servername, \$this->username, \$this->password, \$this->dbname);
+    if(\$this->connection->connect_error) {
+      // TODO output error message
+    }
+  }
+
+  public function __destruct() {
+    \$this->connection->close();
+  }
+
+  public static function getConnection() {
+    if(self::\$db == null) {
+      self::\$db = new Database();
+    }
+    return self::\$db->connection;
+  }
 }
 
 ";
@@ -55,6 +72,7 @@ if(\$conn->connect_error) {
     fclose($dbconnfile);
 
     require_once('dbconnect.php');
+    $conn = Database::getConnection();
 
     $sql = "CREATE TABLE `filmlist` 
             (
@@ -74,6 +92,7 @@ if(\$conn->connect_error) {
 
     $sql = str_replace('filmlist', 'temp', $sql);
     $conn->query($sql);
+    echo $conn->connect_error;
 
     $sql = "CREATE TABLE `watched` 
             (

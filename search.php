@@ -12,7 +12,7 @@
 // }
 
 require_once ('core.php');
-global $conn;
+$conn = Database::getConnection();
 
 $table = $_GET['table'];
 $per_page = 50;

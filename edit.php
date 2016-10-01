@@ -1,6 +1,7 @@
 <?php
 
 require_once('core.php');
+$conn = Database::getConnection();
 
 $method = $_GET['method'];
 

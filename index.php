@@ -6,7 +6,7 @@
   } else {
     $tablename = 'filmlist';
   }
-  $tablename = 'testdb';
+  //$tablename = 'testdb';
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +63,7 @@
       <div class="navbar-form navbar-right">
         <div class="btn-group">
           <button id="scrollDown" class="btn btn-default">Down</button>
-          <button id="scrollUp" class="btn btn-default">Up</button>  
+          <button id="scrollUp" class="btn btn-default">Up</span></button>  
         </div>
       </div>
     </div>
