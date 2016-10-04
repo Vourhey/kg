@@ -1,4 +1,4 @@
-<?php 
+<?php
 // search?query=<query>&table=<table>&page=<page>
 // if there's no query, display all films
 // answer
@@ -49,12 +49,12 @@ if(empty($_GET['query'])) {
   } else if($table == 'watched') {
     $sql .= "ORDER BY id DESC";
   }
-  $sql .= " LIMIT ".$start.",".$per_page; 
-   
+  $sql .= " LIMIT ".$start.",".$per_page;
+
   $result = $conn->query($sql);
   $tbody = "";
-  if($result->num_rows > 0) { 
-  
+  if($result->num_rows > 0) {
+
     while($row = $result->fetch_assoc()) {
       $film = Film::fromRow($row);
 
@@ -85,9 +85,9 @@ if(empty($_GET['query'])) {
   $sql .= " LIMIT ".$start.", ".$per_page;
   errorLog("search", $sql, __FILE__, __LINE__);
   $result = $conn->query($sql);
-  
+
   if($result && $result->num_rows > 0) {
-    
+
     $pagination = "";
     for($i = 1; $i <= $num_pages; ++$i) {
       if($i-1 == $page) {
@@ -98,15 +98,15 @@ if(empty($_GET['query'])) {
     }
 
 //    errorLog('pagination', $pagination, __FILE__, __LINE__);
-  
+
     $tbody = "";
     while($row = $result->fetch_assoc()) {
       $film = Film::fromRow($row);
 
       $tbody .= printRow($film);
     }
-    
-    
+
+
   } else {
     // try to get from kinopoisk.ru
     errorLog("9009", "getting from kp", __FILE__, __LINE__);
@@ -121,13 +121,13 @@ if(empty($_GET['query'])) {
              "','".$film->directors."','".$film->year."','".$film->countries.
              "','".$film->genres."','".$film->rating."','".$film->imdb."','".$film->runtime."')";
 
-      $conn->query($sql); // add to temp table, so there'll be possible to move it to filmlist 
+      $conn->query($sql); // add to temp table, so there'll be possible to move it to filmlist
 
       $pagination = '';
-      $tbody = printRow($film, "plus");  
-    }    
+      $num_pages = 0;
+      $tbody = printRow($film, "plus");
+    }
   }
 }
 
-$jsonanswer = array("pagination" => $pagination, "tbody" => $tbody);
-echo json_encode($jsonanswer);
+echo json_encode(array("num_pages" => $num_pages, "pagination" => $pagination, "tbody" => $tbody));

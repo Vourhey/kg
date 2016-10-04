@@ -1,4 +1,4 @@
-<?php 
+<?php
   require_once('core.php');
 
   if(isset($_GET['watched'])) {
@@ -36,14 +36,15 @@
           <?php if($tablename == 'filmlist') { ?>
             <button id="movebtn" class="btn btn-default">Move</button>
           <?php } ?>
-            <button id="deletebtn" class="btn btn-default">Delete</button>  
+            <button id="deletebtn" class="btn btn-default">Delete</button>
           </div>
         </div>
       </form>
 
       <form class="navbar-form navbar-right">
         <div class="form-group">
-          <input id="searchinput" type="search" placeholder="Search, add or replace" class="form-control" data-table= <?php echo "'$tablename'"; ?> >
+          <input id="searchinput" type="search" placeholder="Search, add or replace"
+            class="form-control" data-table= <?php echo "'$tablename'"; ?> >
         </div>
       </form>
     </div>
@@ -63,7 +64,7 @@
       <div class="navbar-form navbar-right">
         <div class="btn-group">
           <button id="scrollDown" class="btn btn-default">Down</button>
-          <button id="scrollUp" class="btn btn-default">Up</span></button>  
+          <button id="scrollUp" class="btn btn-default">Up</span></button>
         </div>
       </div>
     </div>
@@ -90,6 +91,6 @@
     </table>
     <div class="loader"></div>
   </div>
-  
+
   </body>
 </html>

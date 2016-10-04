@@ -4,6 +4,7 @@ $(function() {
   currentXHR = null;
 
   loadAll();
+  //console.log($('.pagination').data('num_pages'));
 
   $('#searchinput').on("change paste keyup", searchFilm);
   $('#tablebody').on('click', '.plusbutton', moveFromTempToFilmlist);
@@ -25,7 +26,7 @@ $(function() {
   $('#checkallbtn').click(function() {
     console.log("hey, i'm here");
     $('.editbox').click();
-    toggleCheckAll();  
+    toggleCheckAll();
   });
 });
 
@@ -57,13 +58,13 @@ function getTimestamp() {
   var h = now.getHours();
   if(h < 10) {
     h = '0' + h;
-  } 
+  }
   var m = now.getMinutes();
   if(m < 10) {
     m = '0' + m;
   }
   var s = now.getSeconds();
-  if(s < 10) { 
+  if(s < 10) {
     s = '0' + s;
   }
   return h + ":" + m + ":" + s;
@@ -73,7 +74,7 @@ function loadAll() {
   console.log('Load all');
   var si = $('#searchinput');
   si.val('');
-  si.data('oldVal', "");
+  si.data('oldVal', '');
   currentXHR = null;
   if($('#checkallbtn').data('checked')) {
     toggleCheckAll();
@@ -81,14 +82,14 @@ function loadAll() {
 
   $.get("search.php?table="+si.data('table'), function(data) {
     //console.log(data);
-    var answer = JSON.parse(data);
+    var data = JSON.parse(data);
     //console.log(answer.tbody);
-    console.log(answer);
-    $('#tablebody').html(answer.tbody);
-    $('.pagination').html(answer.pagination);
+    console.log(data);
+    $('#tablebody').html(data.tbody);
+    $('.pagination').html(data.pagination);
     $('.loader').hide();
     scrollUp();
-  });  
+  });
 }
 
 function searchFilm() {
@@ -113,9 +114,9 @@ function searchFilm() {
       if($('#checkallbtn').data('checked')) {
         toggleCheckAll();
       }
-   
+
       console.log(getTimestamp() + " " + s.val());
-      currentXHR = 
+      currentXHR =
         $.get("search.php?query=" + encodeURIComponent(s.val()) + "&table="+s.data('table'), function(data) {
           var answer = JSON.parse(data);
           //console.log(answer.tbody);
@@ -183,7 +184,7 @@ function changePage(e) {
   if($('#checkallbtn').data('checked')) {
     toggleCheckAll();
   }
-      
+
   console.log("Page: " + $(this).data('page'));
   var i = $(this);
   var request = "search.php?table=" + i.data('table') + "&page=" + i.data('page');
@@ -201,5 +202,5 @@ function changePage(e) {
     $('.loader').hide();
     scrollUp();
 
-  });  
+  });
 }

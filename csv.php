@@ -2,7 +2,7 @@
 
 // /csv.php?method=(import|export)&table=(tablename)&file=(filename)
 // if method, table, file are not set
-// backup both tables 
+// backup both tables
 
 require_once ('dbconnect.php');
 $conn = Database::getConnection();
@@ -10,7 +10,7 @@ $conn = Database::getConnection();
 function exportTable($table, $file) {
   global $conn;
   $export = fopen($file, "w") or die("Can't open file $file");
-  
+
   $q_export = "SELECT * FROM `$table`";
   if($table == 'filmlist') {
     $q_export .= " ORDER BY name";
@@ -18,9 +18,9 @@ function exportTable($table, $file) {
   $result = $conn->query($q_export);
 
   while($row = $result->fetch_assoc()) {
-    $fields = array($row['kpid'], $row['name'], $row['englishName'], 
-                    $row['directors'], $row['year'], $row['countries'], $row['genres'], 
-                    str_replace('.', ',', $row['rating']), 
+    $fields = array($row['kpid'], $row['name'], $row['englishName'],
+                    $row['directors'], $row['year'], $row['countries'], $row['genres'],
+                    str_replace('.', ',', $row['rating']),
                     str_replace('.', ',', $row['imdb']), $row['runtime']);
 
     fputcsv($export, $fields);
@@ -60,8 +60,8 @@ $tablename = $_GET['table'];
 $filename = $_GET['file'];
 
 if(!isset($method, $tablename, $filename)) { // export all
-  exportTable('filmlist', dirname(__FILE__).'/backup/filmlist_'.date("d_m_Y").'.csv');
-  exportTable('watched', dirname(__FILE__).'/backup/watched_'.date("d_m_Y").'.csv');
+  exportTable('filmlist', dirname(__FILE__).'/backup/'.date("Y_m_d").'_filmlist.csv');
+  exportTable('watched', dirname(__FILE__).'/backup/'.date("Y_m_d").'_watched.csv');
 } else if($method == 'export') {
   exportTable($tablename, $filename);
 } else if($method == 'import') {
