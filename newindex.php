@@ -28,6 +28,24 @@
     margin: 5px auto;
     height: 40px;
   }
+
+  #filmtable {
+  margin-top: 70px;
+  margin-bottom: 60px;
+}
+
+.table tbody>tr>td { 
+  vertical-align: middle;
+  text-align: center;
+}
+
+td:last-child {
+  min-width: 130px;
+} 
+
+thead {
+  font-weight: bold;
+}
 </style>
 
   </head>
@@ -45,18 +63,6 @@
         </div>
         <div class="col-xs-offset-2"></div>
       </div>
-    </div>
-  </nav>
-
-  <!-- Bottom navbar -->
-  <nav class="navbar navbar-default navbar-fixed-bottom text-center">
-    <div class="container-fluid">
-      <ul class="pagination">
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">1</a></li>
-      </ul>
     </div>
   </nav>
 
@@ -81,6 +87,18 @@
     </table>
     <div class="loader"></div>
   </div>
+
+  <!-- Bottom navbar -->
+  <nav class="navbar navbar-default navbar-fixed-bottom text-center">
+    <div class="container-fluid">
+      <ul class="pagination">
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">1</a></li>
+      </ul>
+    </div>
+  </nav>
 
   </body>
 </html>
