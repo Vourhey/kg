@@ -1,3 +1,24 @@
+.open-menu-btn {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.open-menu-btn span {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.search {
+  display: inline-block;
+  text-align: center;
+}
+
+.search input {
+  width: 100%;
+  margin: 5px auto;
+  height: 40px;
+}
+
 #filmtable {
   margin-top: 70px;
   margin-bottom: 60px;

@@ -1,12 +1,16 @@
 <?php
-  require_once('core.php');
 
-  if(isset($_GET['watched'])) {
-    $tablename = 'watched';
-  } else {
-    $tablename = 'filmlist';
-  }
-  //$tablename = 'testdb';
+session_start();
+require_once ('core.php');
+
+$is_entered = false;
+
+if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+  $is_entered = true;
+}
+
+errorLog('31', "is_entered = $is_entered", "index.php", 11);
+
 ?>
 
 <!DOCTYPE html>
@@ -26,49 +30,31 @@
   <!-- Top navbar -->
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <select class="form-control" onchange="window.location.href = this.value">
-            <option value="index.php" <?php if($tablename == 'filmlist') echo 'selected'; ?> >Filmlist</option>
-            <option value="?watched" <?php if($tablename == 'watched') echo 'selected'; ?> >Watched</option>
-          </select>
-          <div id="editButtons" class="btn-group" style="display: none;">
-          <?php if($tablename == 'filmlist') { ?>
-            <button id="movebtn" class="btn btn-default">Move</button>
+      <div class="row">
+
+        <div class="col-xs-1 open-menu-btn">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </div>
+
+        <div class="col-xs-8 search">
+          <input type="text" class="search-textbox" placeholder="Search or add">
+        </div>
+
+        <div class="col-xs-3" style="text-align: right;">
+          <div style="display: inline-block; margin: 5px;">
+
+          <?php if($is_entered) { ?>
+            <a href="logout.php" class="btn btn-default">Log out</a>
+          <?php } else { ?>
+            <a href="register.php" class="btn btn-default">Register</a>
+            <a href="login.php" class="btn btn-default">Log in</a>
           <?php } ?>
-            <button id="deletebtn" class="btn btn-default">Delete</button>
           </div>
         </div>
-      </form>
 
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input id="searchinput" type="search" placeholder="Search, add or replace"
-            class="form-control" data-table= <?php echo "'$tablename'"; ?> >
-        </div>
-      </form>
-    </div>
-  </nav>
-
-  <!-- Bottom navbar -->
-  <nav class="navbar navbar-default navbar-fixed-bottom text-center">
-    <div class="container-fluid">
-      <div class="navbar-form navbar-left">
-        <button id='checkallbtn' class='btn btn-default' data-checked='false'>
-          <span class="glyphicon glyphicon-unchecked"></span> Check All
-        </button>
-      </div>
-      <ul class="pagination">
-        <!-- fills from js -->
-      </ul>
-      <div class="navbar-form navbar-right">
-        <div class="btn-group">
-          <button id="scrollDown" class="btn btn-default">Down</button>
-          <button id="scrollUp" class="btn btn-default">Up</span></button>
-        </div>
       </div>
     </div>
-  </nav>
+  </nav> 
 
   <div class="container-fluid">
     <table id='filmtable' class='table table-striped table-hover'>
@@ -91,6 +77,16 @@
     </table>
     <div class="loader"></div>
   </div>
+
+  <!-- Bottom navbar -->
+  <nav class="navbar navbar-default navbar-fixed-bottom text-center">
+    <div class="container-fluid">
+      <ul class="pagination">
+
+      </ul>
+    </div>
+  </nav>
+
 
   </body>
 </html>

@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>KinopoiskGrabber</title>
 
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="js/main.js"></script>
+
     <link rel="stylesheet" href="css/bootstrap.min.css">
 <!--     <link rel="stylesheet" href="css/main.css"> -->
 
@@ -93,7 +96,7 @@ thead {
     <div class="container-fluid">
       <ul class="pagination">
         <li class="active"><a href="#">1</a></li>
-        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
         <li><a href="#">1</a></li>
         <li><a href="#">1</a></li>
       </ul>

@@ -1,10 +1,9 @@
-
 <?php 
 class Database {
   private $servername = 'kg.test';
   private $username = 'vourhey';
   private $password = 'Ea8yeeb0';
-  private $dbname = 'kg';
+  private $dbname = 'kg_newdesign';
   private static $db;
   private $connection;
 

@@ -1,11 +1,9 @@
 $(function() {
   console.log("Document is loaded!");
 
-  currentXHR = null;
-
   loadAll();
   //console.log($('.pagination').data('num_pages'));
-
+/*
   $('#searchinput').on("change paste keyup", searchFilm);
   $('#tablebody').on('click', '.plusbutton', moveFromTempToFilmlist);
   $('#tablebody').on('click', '.editbox', function() {
@@ -27,9 +25,10 @@ $(function() {
     console.log("hey, i'm here");
     $('.editbox').click();
     toggleCheckAll();
-  });
+  }); */
 });
 
+/*
 function scrollUp() {
   $('body').animate({scrollTop: 0}, 300);
 }
@@ -51,7 +50,7 @@ function toggleCheckAll() {
     i.removeClass('btn-primary').addClass('btn-default');
     child.removeClass('glyphicon-check').addClass('glyphicon-unchecked');
   }
-}
+} */
 
 function getTimestamp() {
   var now = new Date();
@@ -72,26 +71,16 @@ function getTimestamp() {
 
 function loadAll() {
   console.log('Load all');
-  var si = $('#searchinput');
-  si.val('');
-  si.data('oldVal', '');
-  currentXHR = null;
-  if($('#checkallbtn').data('checked')) {
-    toggleCheckAll();
-  }
 
-  $.get("search.php?table="+si.data('table'), function(data) {
-    //console.log(data);
+  $.get("getallfilms.php", function(data) {
     var data = JSON.parse(data);
-    //console.log(answer.tbody);
-    console.log(data);
     $('#tablebody').html(data.tbody);
     $('.pagination').html(data.pagination);
     $('.loader').hide();
-    scrollUp();
   });
 }
 
+/*
 function searchFilm() {
   console.log(getTimestamp() + " function searchFilm()");
   var s = $(this);
@@ -204,3 +193,4 @@ function changePage(e) {
 
   });
 }
+*/
