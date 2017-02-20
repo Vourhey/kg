@@ -27,13 +27,22 @@ errorLog('31', "is_entered = $is_entered", "index.php", 11);
   </head>
   <body>
 
+  <!-- side navigation menu -->
+  <div id="sidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">Watched</a>
+    <a href="#">Import/Export</a>
+  </div>
+
   <!-- Top navbar -->
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="row">
 
         <div class="col-xs-1 open-menu-btn">
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        <?php if($is_entered) { ?>
+          <span class="glyphicon glyphicon-menu-hamburger" onclick="openNav()"></span>
+        <?php } ?>
         </div>
 
         <div class="col-xs-8 search">

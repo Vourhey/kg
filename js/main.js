@@ -28,6 +28,14 @@ $(function() {
   }); */
 });
 
+function openNav() {
+  $('#sidenav').css('width','250px');
+}
+
+function closeNav() {
+  $('#sidenav').css('width', '0px');
+}
+
 /*
 function scrollUp() {
   $('body').animate({scrollTop: 0}, 300);
