@@ -2,7 +2,9 @@
 
 session_start();
 
-require_once ('core.php');
+require_once ('errorhandler.php');
+
+errorLog('ll', "before if", "login.php", 17);
 
 if(isset($_POST['username']) && isset($_POST['password'])) {
   require_once ('dbconnect.php');
@@ -23,7 +25,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 
     header('location: index.php');
   }
-} else {
+} //else {
 
 ?>
 
@@ -36,4 +38,4 @@ Login form
   <input type="submit" name="submit">
 </form>
 
-<?php } ?>
+<?php // } ?>

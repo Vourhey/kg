@@ -10,7 +10,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
   // TODO check if the user exists
 
   $sql = "INSERT INTO users (name, password) VALUES ('$username', '$token')";
-  echo $sql;
+//  echo $sql;
   $result = $conn->query($sql);
 
   // TODO check $result for errors

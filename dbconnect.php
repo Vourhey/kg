@@ -1,4 +1,6 @@
 <?php 
+
+
 class Database {
   private $servername = 'kg.test';
   private $username = 'vourhey';
@@ -11,6 +13,7 @@ class Database {
     $this->connection = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
     if($this->connection->connect_error) {
       // TODO output error message
+      errorLog(3211, $this->connection->connect_error, 'dbconnect.php', 16);
     }
   }
 

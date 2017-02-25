@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once ('core.php');
+require_once ('errorhandler.php');
 
 $is_entered = false;
 
@@ -31,7 +31,8 @@ errorLog('31', "is_entered = $is_entered", "index.php", 11);
   <div id="sidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="#">Watched</a>
-    <a href="#">Import/Export</a>
+    <a href="import_export.php">Import/Export</a>
+    <a href="#">Statistics</a>
   </div>
 
   <!-- Top navbar -->

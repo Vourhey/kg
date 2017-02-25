@@ -1,6 +1,6 @@
 <?php
 
-require_once('core.php');
+require_once('errorhandler.php');
 $conn = Database::getConnection();
 
 $method = $_GET['method'];

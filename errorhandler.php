@@ -1,6 +1,6 @@
 <?php
-require_once('dbconnect.php');
-require_once('Film.class.php');
+// require_once('dbconnect.php');
+// require_once('Film.class.php');
 
 function errorLog($errno, $errstr, $errfile, $errline) {
   $logfile = fopen("log.txt", 'a');
@@ -11,6 +11,7 @@ function errorLog($errno, $errstr, $errfile, $errline) {
 
 set_error_handler("errorLog");
 
+/*
 function printRow($film, $button = null) {
   $out = "<tr><td class='tdclickable'>"; 
 
@@ -57,4 +58,5 @@ function printAll($tablename) {
   } else {
     echo "<tr id='nofilmstr'><td colspan='10'>You don't have watched films!</td></tr>";
   }
-}
+}*/
+
