@@ -73,7 +73,7 @@ $xpath = getXPath($item);
 $film = new Film();
 $film->fillFromXpath($xpath);
 
-echo "<tr><td></td><td><img src='posters/".$film->id.".jpg'></td>
+echo "<tr><td></td><td><img class='poster' src='posters/".$film->id.".jpg'></td>
         <td>".$film->name."</td>
         <td>".$film->directors."</td>
         <td>".$film->year."</td>

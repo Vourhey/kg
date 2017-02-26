@@ -1,7 +1,7 @@
 <?php
 
-require_once('dbconnect.php');
-require_once('Film.class.php');
+require_once 'dbconnect.php';
+require_once 'Film.class.php';
 
 $conn = Database::getConnection();
 
@@ -18,7 +18,7 @@ for($i = 1; $i <= $amount_of_pages; ++$i) {
     $pagination .= "<li><a href='#' data-page='$i'>$i</a></li>";
 }
 
-$sql = "SELECT * FROM filmlist ORDER BY name LIMIT 0,$ROWS_PER_PAGE";
+$sql = "SELECT * FROM filmlist WHERE needs_approval=0 ORDER BY name LIMIT 0,$ROWS_PER_PAGE";
 $result = $conn->query($sql);
 $tbody = "";
 

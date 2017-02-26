@@ -28,11 +28,11 @@ $(function() {
   }); */
 });
 
-function openNav() {
+function openSidenav() {
   $('#sidenav').css('width','250px');
 }
 
-function closeNav() {
+function closeSidenav() {
   $('#sidenav').css('width', '0px');
 }
 
@@ -82,8 +82,13 @@ function loadAll() {
 
   $.get("getallfilms.php", function(data) {
     var data = JSON.parse(data);
+    //console.log(data);
     $('#tablebody').html(data.tbody);
-    $('.pagination').html(data.pagination);
+    if(data.amount_of_pages == 1) {
+      $('#bottom-navbar').hide();
+    } else {
+      $('.pagination').html(data.pagination).show();
+    }
     $('.loader').hide();
   });
 }

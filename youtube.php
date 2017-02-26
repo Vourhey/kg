@@ -8,11 +8,11 @@
  * 3. Require the google/apiclient library
  *    $ composer require google/apiclient:~2.0
  */
-if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+if (!file_exists(__DIR__ . '/google_library/vendor/autoload.php')) {
   throw new \Exception('please run "composer require google/apiclient:~2.0" in "' . __DIR__ .'"');
 }
 
-require_once 'vendor/autoload.php';
+require_once 'google_library/vendor/autoload.php';
 
 $htmlBody = <<<END
 <form method="GET" action="youtube.php">

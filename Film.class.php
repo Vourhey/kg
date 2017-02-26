@@ -3,6 +3,7 @@
 require_once 'Snoopy.class.php';
 require_once 'errorhandler.php';
 require_once 'dbconnect.php';
+require_once 'google_library/vendor/autoload.php';
 
 // represents a row from a filmlist table
 class Film {
@@ -47,7 +48,7 @@ class Film {
     $this->countries = $this->queryCountries();
     $this->genres = $this->queryGenres();
     $this->description = $this->queryDescription();
-    $this->trailer = "";  // TOOD link to youtube
+    $this->trailer = $this->queryTrailer();
     $this->actors = $this->queryActors();
     $this->needs_approval = 1;
 
@@ -80,7 +81,32 @@ class Film {
   }
 
   private function queryDirectors() {
-    return $this->xpath->query('//td[@itemprop="director"]')->item(0)->textContent;
+    $directors = $this->xpath->query('//td[@itemprop="director"]')->item(0)->textContent;
+
+    $directors = explode(', ', $directors);
+    errorLog(88, var_export($directors, true), __FILE__, __LINE__);
+
+    $to_return = "";
+    foreach ($directors as $d) {
+      $sql = "SELECT id FROM directors WHERE director='$d';";
+      $result = $this->conn->query($sql);
+
+      errorLog(257, "$sql", __FILE__, __LINE__);
+
+      if($result->num_rows == 1) {
+        $id = $result->fetch_assoc()['id'];
+      } else {
+        $sql = "INSERT INTO directors (director) VALUES ('$d')";
+        $result = $this->conn->query($sql);
+        $id = $this->conn->insert_id;
+      }
+
+      $to_return .= $id.' ';
+    }
+
+    errorLog(257, "The result is $to_return", __FILE__, __LINE__);
+
+    return substr($to_return, 0, -1);
   }
 
   private function queryYear() {
@@ -161,6 +187,38 @@ class Film {
 
     //errorLog(7575757, $d, __FILE__, __LINE__);
     return $d;
+  }
+
+  private function queryTrailer() {   // using youtube api
+    $DEVELOPER_KEY = 'AIzaSyD2JN4nPimWxItczjJgC2BnWdFSH08qms8';
+
+    $client = new Google_Client();
+    $client->setDeveloperKey($DEVELOPER_KEY);
+    $youtube = new Google_Service_YouTube($client);
+
+    $searchResult = '';
+
+    try {
+
+      $searchResponse = $youtube->search->listSearch('id', 
+        array(
+          'q' => $this->name.' official trailer',
+          'maxResults' => 1,
+          'type' => 'video',
+          'videoEmbeddable' => 'true',
+      ));
+
+      $searchResult = $searchResponse['items'][0];
+    } catch (Google_Service_Exception $e) {
+      $htmlBody .= sprintf('<p>A service error occurred: <code>%s</code></p>', $e->getMessage());
+      errorLog(76867, $htmlBody, __FILE__, __LINE__);
+    } catch (Google_Exception $e) {
+      $htmlBody .= sprintf('<p>An client error occurred: <code>%s</code></p>', $e->getMessage());
+      errorLog(76867, $htmlBody, __FILE__, __LINE__);
+    }
+
+    errorLog(900000, $searchResult['id']['videoId'], __FILE__, __LINE__);
+    return $searchResult['id']['videoId'];
   }
 
   private function queryActors() {
