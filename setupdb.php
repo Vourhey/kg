@@ -87,7 +87,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `users`
           email VARCHAR(255) NOT NULL,
           password VARCHAR(100) NOT NULL,
           registered_date DATE NOT NULL,
-          UNIQUE KEY name (email)
+          UNIQUE KEY email (email)
         ) ENGINE=InnoDB;";
 $result = $conn->query($sql);
 if($result) {

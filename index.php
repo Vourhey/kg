@@ -40,7 +40,6 @@ errorLog('31', "is_entered = $is_entered", "index.php", 11);
   <nav id="top-navbar" class="navbar navbar-default navbar-fixed-top text-center">
     <div class="container-fluid">
 
-        <!-- <div class="collapse navbar-collapse "> -->
         <div>
         <?php if($is_entered) { ?>
           <ul class="nav navbar-nav">
@@ -74,12 +73,12 @@ errorLog('31', "is_entered = $is_entered", "index.php", 11);
                       <form class="form" role="form" method="post" action="login.php" accept-charset="UTF-8" id="login-nav">
                         <div class="form-group">
                           <label class="sr-only" for="input-email">Email address</label>
-                          <input type="email" class="form-control" id="input-email" placeholder="Email address" required>
+                          <input type="email" class="form-control" id="input-email" placeholder="Email address" name="email" required>
                         </div>
                         <div class="form-group">
-                          <label class="sr-only" for="exampleInputPassword2">Password</label>
-                          <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                          <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+                          <label class="sr-only" for="input-password">Password</label>
+                          <input type="password" class="form-control" id="input-password" placeholder="Password" name="password" required>
+                         <!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
                         </div>
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary btn-block">Sign in</button>
