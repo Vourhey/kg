@@ -1,6 +1,5 @@
 <?php 
 
-
 class Database {
   private $servername = 'kg.test';
   private $username = 'vourhey';

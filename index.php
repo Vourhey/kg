@@ -37,38 +37,40 @@ errorLog('31', "is_entered = $is_entered", "index.php", 11);
   </div>
 
   <!-- Top navbar -->
-  <nav id="top-navbar" class="navbar navbar-default navbar-fixed-top">
+  <nav id="top-navbar" class="navbar navbar-default navbar-fixed-top text-center">
     <div class="container-fluid">
 
         <!-- <div class="collapse navbar-collapse "> -->
         <div>
+        <?php if($is_entered) { ?>
           <ul class="nav navbar-nav">
             <li class="open-menu-btn">
               <span class="glyphicon glyphicon-menu-hamburger" onclick="openSidenav()"></span>
             </li>
           </ul>
-        <!-- 
-        <?php // if($is_entered) { ?>
-          <span class="glyphicon glyphicon-menu-hamburger" onclick="openSidenav()"></span>
-        <?php // } ?> -->
-<!--
-        <div class="col-xs-8 search">
-          <input type="text" class="search-textbox" placeholder="Search or add">
-        </div> -->
+        <?php } ?>
 
-          <form class="navbar-form navbar-left" role="search" style="width: 80%; margin-left: auto; margin-right: auto; padding: 0px;">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+          <form class="navbar-form" role="search" style="display: inline-block; width: 60%;">
+            <div class="form-group" style="width: 100%;">
+              <input type="text" class="form-control" placeholder="Search" style="width: 100%;">
             </div>
           </form>
 
           <ul class="nav navbar-nav navbar-right">
+
+          <?php if($is_entered) { ?>
+          
+            <li><a href="logout.php"><strong>Log out</strong></a></li>
+
+          <?php } else { ?>
+
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Login</strong> <span class="caret"></span></a>
               <ul id="login-dp" class="dropdown-menu">
                 <li>
                   <div class="row">
                     <div class="col-md-12">
+
                       <form class="form" role="form" method="post" action="login.php" accept-charset="UTF-8" id="login-nav">
                         <div class="form-group">
                           <label class="sr-only" for="input-email">Email address</label>
@@ -82,35 +84,31 @@ errorLog('31', "is_entered = $is_entered", "index.php", 11);
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary btn-block">Sign in</button>
                         </div>
-                        <div class="checkbox">
+                        
+                        <!-- <div class="checkbox">
                           <label>
                             <input type="checkbox"> keep me logged-in
                           </label>
-                        </div>
+                        </div> -->
+
                       </form>
+
                     </div>
                     <div class="bottom text-center">
+
                       New here? <a href="register.php"><strong>Register</strong></a>
+
                     </div>
                   </div>
                 </li>
               </ul>
             </li>
-          </ul>
-        </div>
-<!--
-        <div class="col-xs-3" style="text-align: right;">
-          <div style="display: inline-block; margin: 5px;">
 
-          <?php if($is_entered) { ?>
-            <a href="logout.php" class="btn btn-default">Log out</a>
-          <?php } else { ?>
-            <a href="register.php" class="btn btn-default">Register</a>
-            <a href="login.php" class="btn btn-default">Log in</a>
           <?php } ?>
-          </div>
-        </div> -->
 
+          </ul>
+
+        </div>
     </div>
   </nav> 
 
