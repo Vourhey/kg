@@ -1,9 +1,9 @@
 <?php
 
-require_once 'Snoopy.class.php';
+require_once 'libs/snoopy/Snoopy.class.php';
 require_once 'errorhandler.php';
 require_once 'dbconnect.php';
-require_once 'google_library/vendor/autoload.php';
+require_once 'libs/google_library/vendor/autoload.php';
 
 // represents a row from a filmlist table
 class Film {

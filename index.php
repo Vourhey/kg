@@ -5,7 +5,7 @@ require_once ('errorhandler.php');
 
 $is_entered = false;
 
-if(isset($_SESSION['userid']) && isset($_SESSION['username'])) {
+if(isset($_SESSION['userid']) && isset($_SESSION['email'])) {
   $is_entered = true;
 }
 
@@ -28,13 +28,14 @@ errorLog('31', "is_entered = $is_entered", "index.php", 11);
   </head>
   <body>
 
+<?php if($is_entered) { ?>
   <!-- side navigation menu -->
   <div id="sidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeSidenav()">&times;</a>
     <a href="#">Watched</a>
     <a href="import_export.php">Import/Export</a>
-    <a href="#">Statistics</a>
   </div>
+<?php } ?>
 
   <!-- Top navbar -->
   <nav id="top-navbar" class="navbar navbar-default navbar-fixed-top text-center">

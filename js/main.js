@@ -81,10 +81,11 @@ function loadAll() {
   console.log('Load all');
 
   $.get("getallfilms.php", function(data) {
+    console.log(data);
     var data = JSON.parse(data);
-    //console.log(data);
+    console.log(data);
     $('#tablebody').html(data.tbody);
-    if(data.amount_of_pages == 1) {
+    if(data.amount_of_pages < 2) {
       $('#bottom-navbar').hide();
     } else {
       $('.pagination').html(data.pagination).show();

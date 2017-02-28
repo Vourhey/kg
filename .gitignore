@@ -2,3 +2,4 @@ log.txt
 *.csv
 posters/*
 backup/*
+libs/google_library/*
